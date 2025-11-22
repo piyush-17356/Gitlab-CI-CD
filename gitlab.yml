@@ -1,0 +1,29 @@
+# 1. The Environment (Global Image)
+# This defines the Docker container where ALL jobs run by default.
+image: alpine:latest
+
+# 2. The Sequence (Stages)
+# This defines the order. 'test' will not run until 'build' succeeds.
+stages:
+  - build
+  - test
+
+# 3. The Jobs (Units of Work)
+
+# Job A: The Build Step
+compile_code:
+  stage: build
+  script:
+    - echo "Compiling the code..."
+    - mkdir build_artifact/
+
+# Job B: The Test Step
+run_unit_tests:
+  stage: test
+  # 4. Tags (Runner Selection)
+  # Tells GitLab to use a specific runner with this tag
+  tags:
+    - docker-runner
+  script:
+    - echo "Running unit tests..."
+    - echo "Tests Passed!"
