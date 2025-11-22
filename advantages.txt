@@ -1,3 +1,5 @@
+https://gemini.google.com/share/9eccc47e4900
+
 1. The Core Advantages
 
 Speed: Move from monthly releases to daily (or hourly) deployments.
