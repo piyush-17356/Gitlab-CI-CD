@@ -1,0 +1,55 @@
+*Speaker Notes (Slide - Agenda)*
+"Hello everyone, and thanks for joining.
+
+As most of you know, our team has been working hard on moving our build system from TeamCity over to GitLab. That migration is now largely complete—our pipelines are up and running in the new environment.
+But we realized that while the system has moved, we haven't really taken the time to sit down as a group and explain how it actually works under the hood.
+For those of you coming from TeamCity, this is a bit of a mindset shift. In the old world, we configured builds by clicking buttons and checkboxes on a web page. In this new GitLab world, we do things differently. We treat our pipeline configuration just like our code.
+Think of it like a recipe. Instead of setting up a kitchen (TeamCity) and hoping it remembers how to cook the dish, we now write the recipe down in a file that travels with the food (the code). This means anyone can look at the file and understand exactly how the software is built, tested, and deployed.
+The goal of this session is simple: We want to demystify that recipe.
+Whether you are a developer, a QA engineer, or a manager, we want you to leave this room understanding exactly what happens to your code after you press 'Push'.
+We’ll keep the jargon to a minimum, look at the basics, and then run a few live examples together.
+Here is our plan for the session."
+
+
+
+*Speaker Notes (Slide - Introduction to DevOps & CI/CD)*
+
+"Before we start writing pipelines, we need to understand why they exist.
+First, what is DevOps? It’s not just a job title; it’s a cultural shift. Historically, Developers built the code and threw it over a wall to Operations to support. DevOps breaks down that wall. It merges these two disciplines to shorten our lifecycle and deliver value faster.
+To achieve this, we rely on a few Core Principles:
+Collaboration: We stop working in silos.
+Feedback: We need to know immediately if something is broken.
+Automation: This is the most critical one for today. We cannot move fast if we are manually copying files to servers.
+
+This brings us to CI/CD, which is essentially the technical engine that powers these principles.
+CI is about the Build and Test phase—automating verification so we know our code is safe.
+CD is about the Deployment phase—automating the actual release so it's consistent every single time.
+
+In the next slide, we’ll see exactly what that lifecycle looks like visually."
+
+
+
+*Speaker Notes (Slide - GitLab CI/CD Pipeline Lifecycle)*
+
+"Now that we understand the concept of DevOps, let’s look at the mechanism that powers it. This is the lifecycle of a standard GitLab pipeline.
+
+1. The Trigger (Source) It all starts on the left. The moment a developer pushes code to the repository, they don't have to email anyone or file a ticket. That git push is the trigger that automatically wakes up the pipeline.
+
+2. The CI Stage (Build & Test) This moves us into the central block—Continuous Integration. Here, the GitLab Runner takes over. It compiles the code (Build) and, crucially, runs our automated test suite.
+
+3. The Decision Point (The Quality Gate) I want you to focus on the split in the middle here. This is our Quality Gate.
+If you look at the Red Arrow: If any test fails, the pipeline stops immediately. It does not proceed. The developer gets a notification, fixes the bug, and tries again. This is 'Failing Fast.'
+Only if we get the Green Arrow—meaning all tests passed—does the pipeline package the application into an artifact (like a Docker image).
+
+4. The CD Stage (Deploy) Once that artifact is ready, we move to the right—Continuous Deployment. We automatically deploy to a Staging environment for final review. And finally, we deploy to Production, often with a manual approval button for safety, completing the journey from code to customer."
+
+
+*Speaker Notes (Slide - The Why : Advantages & Guardrails)*
+
+"So, why do we go through the trouble of building these pipelines?
+First, it gives us Speed and Consistency. Humans make mistakes; scripts don't. When we automate deployment, we eliminate the 'human error' factor entirely.
+But the biggest advantage is safety—what we call Guardrails.
+In a traditional manual process, you might not realize you broke something until a customer calls you complaining. In a CI/CD pipeline, we have a philosophy called 'Fail Fast.'
+We want the pipeline to turn red. We want it to fail. Because if it fails here, in the Build stage, it means it didn't fail in Production.
+
+Let's move to the Live Demo. I'm going to act as a developer who has made a mistake. I’m going to push broken code to our repository, and we are going to watch the Guardrails kick in to save us."
